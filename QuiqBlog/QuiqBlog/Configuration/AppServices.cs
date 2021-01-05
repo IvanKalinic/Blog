@@ -19,7 +19,7 @@ namespace QuiqBlog.Configuration
                     configuration.GetConnectionString("DefaultConnection")));
             serviceCollection.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            serviceCollection.AddControllersWithViews();
+            serviceCollection.AddControllersWithViews().AddRazorRuntimeCompilation();
             serviceCollection.AddRazorPages();
         }
     }
