@@ -6,8 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QuiqBlog.BusinessManagers;
+using QuiqBlog.BusinessManagers.Interfaces;
 using QuiqBlog.Data;
 using QuiqBlog.Data.Models;
+using QuiqBlog.Service;
+using QuiqBlog.Service.Interfaces;
 
 namespace QuiqBlog.Configuration
 {
@@ -22,6 +26,13 @@ namespace QuiqBlog.Configuration
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             serviceCollection.AddControllersWithViews().AddRazorRuntimeCompilation();
             serviceCollection.AddRazorPages();
+        }
+
+        public static void AddCustomServices(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<IBlogBusinessManager, BlogBusinessManager>();
+
+            serviceCollection.AddScoped<IBlogService, BlogService>();
         }
     }
 }
