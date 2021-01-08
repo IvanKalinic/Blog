@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using QuiqBlog.BusinessManagers;
 using QuiqBlog.BusinessManagers.Interfaces;
 using QuiqBlog.Data;
@@ -26,6 +28,9 @@ namespace QuiqBlog.Configuration
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             serviceCollection.AddControllersWithViews().AddRazorRuntimeCompilation();
             serviceCollection.AddRazorPages();
+
+            serviceCollection.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
         }
 
         public static void AddCustomServices(this IServiceCollection serviceCollection)

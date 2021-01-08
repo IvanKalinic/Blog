@@ -10,6 +10,6 @@ namespace QuiqBlog.BusinessManagers.Interfaces
 {
     public interface IBlogBusinessManager
     {
-        Task<Blog> CreateBlog(CreateBlogViewModel createBlogViewModel, ClaimsPrincipal claimsPrincipal);
+        Task<Blog> CreateBlog(CreateViewModel createViewModel, ClaimsPrincipal claimsPrincipal);
     }
 }
