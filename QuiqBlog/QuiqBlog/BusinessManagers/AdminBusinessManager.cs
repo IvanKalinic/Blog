@@ -14,19 +14,19 @@ namespace QuiqBlog.BusinessManagers
     public class AdminBusinessManager : IAdminBusinessManager
     {
         private UserManager<ApplicationUser> userManager;
-        private IBlogService blogService;
+        private IPostService postService;
 
-        public AdminBusinessManager(UserManager<ApplicationUser> UserManager, IBlogService BlogService)
+        public AdminBusinessManager(UserManager<ApplicationUser> UserManager, IPostService postService)
         {
             this.userManager = UserManager;
-            this.blogService = BlogService;
+            this.postService = postService;
         }
         public async Task<IndexViewModel> GetAdminDashboard(ClaimsPrincipal claimsPrincipal)
         {
             var applicationUser = await userManager.GetUserAsync(claimsPrincipal);
             return new IndexViewModel
             {
-                Blogs = blogService.GetBlogs(applicationUser)
+                Posts = postService.GetPosts(applicationUser)
             };
         }
     }

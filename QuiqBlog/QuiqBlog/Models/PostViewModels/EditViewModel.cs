@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using QuiqBlog.Data.Models;
 
-namespace QuiqBlog.Models.BlogViewModels
+namespace QuiqBlog.Models.PostViewModels
 {
     public class EditViewModel
     {
         [Display(Name = "Header Image")]
-        public IFormFile BlogHeaderImage { get; set; }
+        public IFormFile HeaderImage { get; set; }
 
-        public Blog Blog { get; set; }
+        public Post Post { get; set; }
     }
 }

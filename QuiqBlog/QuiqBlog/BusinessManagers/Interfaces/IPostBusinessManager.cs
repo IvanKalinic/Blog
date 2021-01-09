@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuiqBlog.Data.Models;
 using QuiqBlog.Models.HomeViewModels;
-using QuiqBlog.Models.BlogViewModels;
+using QuiqBlog.Models.PostViewModels;
 
 namespace QuiqBlog.BusinessManagers.Interfaces
 {
-    public interface IBlogBusinessManager
+    public interface IPostBusinessManager
     {
         IndexViewModel GetIndexViewModel(string searchString, int? page);
-        Task<Blog> CreateBlog(CreateViewModel createViewModel, ClaimsPrincipal claimsPrincipal);
+        Task<Post> CreatePost(CreateViewModel createViewModel, ClaimsPrincipal claimsPrincipal);
 
-        Task<ActionResult<EditViewModel>> UpdateBlog(EditViewModel editViewModel,
+        Task<ActionResult<EditViewModel>> UpdatePost(EditViewModel editViewModel,
             ClaimsPrincipal claimsPrincipal);
 
         Task<ActionResult<EditViewModel>> GetEditViewModel(int? id, ClaimsPrincipal claimsPrincipal);

@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using QuiqBlog.BusinessManagers.Interfaces;
-using QuiqBlog.Models.BlogViewModels;
+using QuiqBlog.Models.PostViewModels;
 
 namespace QuiqBlog.Controllers
 {
-    public class BlogController : Controller
+    public class PostController : Controller
     {
-        private readonly IBlogBusinessManager blogBusinessManager;
+        private readonly IPostBusinessManager postBusinessManager;
 
-        public BlogController(IBlogBusinessManager BlogBusinessManager)
+        public PostController(IPostBusinessManager postBusinessManager)
         {
-            this.blogBusinessManager = BlogBusinessManager;
+            this.postBusinessManager = postBusinessManager;
         }
 
         public IActionResult Index()
@@ -29,7 +29,7 @@ namespace QuiqBlog.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
-            var actionResult = await blogBusinessManager.GetEditViewModel(id, User);
+            var actionResult = await postBusinessManager.GetEditViewModel(id, User);
             if (actionResult.Result is null)
                 return View(actionResult.Value);
 
@@ -38,16 +38,16 @@ namespace QuiqBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CreateViewModel createViewModel)
         {
-            await blogBusinessManager.CreateBlog(createViewModel, User);
+            await postBusinessManager.CreatePost(createViewModel, User);
             return RedirectToAction("Create");
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(EditViewModel editViewModel)
         {
-            var actionResult = await blogBusinessManager.UpdateBlog(editViewModel, User);
+            var actionResult = await postBusinessManager.UpdatePost(editViewModel, User);
             if (actionResult.Result is null)
-                return RedirectToAction("Edit", new {editViewModel.Blog.Id});
+                return RedirectToAction("Edit", new {editViewModel.Post.Id});
 
             return actionResult.Result;
         }
