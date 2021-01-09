@@ -5,12 +5,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuiqBlog.Data.Models;
+using QuiqBlog.Models.HomeViewModels;
 using QuiqBlog.Models.BlogViewModels;
 
 namespace QuiqBlog.BusinessManagers.Interfaces
 {
     public interface IBlogBusinessManager
     {
+        IndexViewModel GetIndexViewModel(string searchString, int? page);
         Task<Blog> CreateBlog(CreateViewModel createViewModel, ClaimsPrincipal claimsPrincipal);
 
         Task<ActionResult<EditViewModel>> UpdateBlog(EditViewModel editViewModel,

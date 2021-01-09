@@ -27,13 +27,16 @@
     @await Component.InvokeAsync("Navigation")
 
     <!-- Page Header -->
-    
+
     @await Component.InvokeAsync("Header")
 
-    @RenderBody()
+    <div class="content">
+        @RenderBody()
+    </div>
+
 
     @await Component.InvokeAsync("Footer")
-   
+
 
 
     <script src="~/vendor/jquery/jquery.min.js"></script>
