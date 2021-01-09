@@ -9,5 +9,7 @@ namespace QuiqBlog.Service.Interfaces
     public interface IBlogService
     {
        Task<Blog> Add(Blog blog);
+
+       IEnumerable<Blog> GetBlogs(ApplicationUser applicationUser);
     }
 }

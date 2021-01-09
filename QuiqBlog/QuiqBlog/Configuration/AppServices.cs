@@ -36,6 +36,8 @@ namespace QuiqBlog.Configuration
         public static void AddCustomServices(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IBlogBusinessManager, BlogBusinessManager>();
+            serviceCollection.AddScoped<IAdminBusinessManager, AdminBusinessManager>();
+
 
             serviceCollection.AddScoped<IBlogService, BlogService>();
         }

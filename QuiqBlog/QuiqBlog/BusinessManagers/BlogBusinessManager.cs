@@ -31,6 +31,7 @@ namespace QuiqBlog.BusinessManagers
 
             blog.Creator = await userManager.GetUserAsync(claimsPrincipal);
             blog.CreatedOn = DateTime.Now;
+            blog.UpdatedOn = DateTime.Now;
 
             blog = await blogService.Add(blog);
 

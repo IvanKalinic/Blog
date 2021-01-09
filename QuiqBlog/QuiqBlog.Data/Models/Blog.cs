@@ -18,6 +18,8 @@ namespace QuiqBlog.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime UpdatedOn { get; set; }
+
         public bool Published { get; set; }
 
         public bool Approved { get; set; }
