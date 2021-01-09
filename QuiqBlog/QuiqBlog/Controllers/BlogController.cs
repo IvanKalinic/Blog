@@ -26,6 +26,15 @@ namespace QuiqBlog.Controllers
         {
             return View(new CreateViewModel());
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var actionResult = await blogBusinessManager.GetEditViewModel(id, User);
+            if (actionResult.Result is null)
+                return View(actionResult.Value);
+
+            return actionResult.Result;
+        }
         [HttpPost]
         public async Task<IActionResult> Add(CreateViewModel createViewModel)
         {

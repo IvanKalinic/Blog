@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using QuiqBlog.Authorization;
 using QuiqBlog.BusinessManagers;
 using QuiqBlog.BusinessManagers.Interfaces;
 using QuiqBlog.Data;
@@ -40,6 +43,11 @@ namespace QuiqBlog.Configuration
 
 
             serviceCollection.AddScoped<IBlogService, BlogService>();
+        }
+
+        public static void AddCustomAuthorization(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddSingleton<IAuthorizationHandler, BlogAuthorizationHandler>();
         }
     }
 }

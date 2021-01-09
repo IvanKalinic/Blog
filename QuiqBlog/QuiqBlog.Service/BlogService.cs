@@ -18,14 +18,11 @@ namespace QuiqBlog.Service
         {
             this.applicationDbContext = ApplicationDbContext;
         }
-        public async Task<Blog> Add(Blog blog)
+
+        public Blog GetBlog(int blogId)
         {
-            applicationDbContext.Add(blog);
-            await applicationDbContext.SaveChangesAsync();
-
-            return blog;
+            return applicationDbContext.Blogs.FirstOrDefault(blog => blog.Id == blogId);
         }
-
         public IEnumerable<Blog> GetBlogs(ApplicationUser applicationUser)
         {
             return applicationDbContext.Blogs
@@ -33,6 +30,13 @@ namespace QuiqBlog.Service
                 .Include(blog => blog.Approver)
                 .Include(blog => blog.Posts)
                 .Where(blog => blog.Creator == applicationUser);
+        }
+        public async Task<Blog> Add(Blog blog)
+        {
+            applicationDbContext.Add(blog);
+            await applicationDbContext.SaveChangesAsync();
+
+            return blog;
         }
     }
 }
