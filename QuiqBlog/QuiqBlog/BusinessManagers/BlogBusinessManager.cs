@@ -24,7 +24,7 @@ namespace QuiqBlog.BusinessManagers
 
         private readonly IAuthorizationService authorizationService;
 
-        public BlogBusinessManager(UserManager<ApplicationUser> UserManager, IBlogService BlogService,IWebHostEnvironment webHostEnvironment, IAuthorizationService authorizationService)
+        public BlogBusinessManager(UserManager<ApplicationUser> UserManager, IBlogService BlogService, IWebHostEnvironment webHostEnvironment, IAuthorizationService authorizationService)
         {
             this.userManager = UserManager;
             this.blogService = BlogService;
@@ -54,11 +54,47 @@ namespace QuiqBlog.BusinessManagers
             return blog;
         }
 
+        public async Task<ActionResult<EditViewModel>> UpdateBlog(EditViewModel editViewModel,
+            ClaimsPrincipal claimsPrincipal)
+        {
+            var blog = blogService.GetBlog(editViewModel.Blog.Id);
+
+            if (blog is null)
+                return new NotFoundResult();
+
+            var authorizationResult =
+                await authorizationService.AuthorizeAsync(claimsPrincipal, blog, Operations.Update);
+            if (!authorizationResult.Succeeded)
+                return DetermineActionResult(claimsPrincipal);
+
+            blog.Published = editViewModel.Blog.Published;
+            blog.Title = editViewModel.Blog.Title;
+            blog.Content = editViewModel.Blog.Content;
+            blog.UpdatedOn = DateTime.Now;
+
+            if (editViewModel.BlogHeaderImage != null)
+            {
+                string webRootPath = webHostEnvironment.WebRootPath;
+                string pathToImage = $@"{webRootPath}\UserFiles\Blogs\{blog.Id}\HeaderImage.jpg";
+
+                EnsureFolder(pathToImage);
+                using (var fileStream = new FileStream(pathToImage, FileMode.Create))
+                {
+                    await editViewModel.BlogHeaderImage.CopyToAsync(fileStream);
+                }
+            }
+
+            return new EditViewModel
+            {
+                Blog = await blogService.Update(blog)
+            };
+        }
+
         public async Task<ActionResult<EditViewModel>> GetEditViewModel(int? id, ClaimsPrincipal claimsPrincipal)
         {
             if (id is null)
                 return new BadRequestResult();
-            
+
             var blogId = id.Value;
             var blog = blogService.GetBlog(blogId);
 
@@ -68,17 +104,20 @@ namespace QuiqBlog.BusinessManagers
             var authorizationResult =
                 await authorizationService.AuthorizeAsync(claimsPrincipal, blog, Operations.Update);
             if (!authorizationResult.Succeeded)
-            {
-                if(claimsPrincipal.Identity.IsAuthenticated)
-                    return new ForbidResult();
-                else 
-                    return new ChallengeResult();
-            }
+                return DetermineActionResult(claimsPrincipal);
 
             return new EditViewModel
             {
                 Blog = blog
             };
+        }
+
+        private ActionResult DetermineActionResult(ClaimsPrincipal claimsPrincipal)
+        {
+            if (claimsPrincipal.Identity.IsAuthenticated)
+                return new ForbidResult();
+            else
+                return new ChallengeResult();
         }
 
         private void EnsureFolder(string path)

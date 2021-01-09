@@ -47,7 +47,7 @@ namespace QuiqBlog.Configuration
 
         public static void AddCustomAuthorization(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IAuthorizationHandler, BlogAuthorizationHandler>();
+            serviceCollection.AddTransient<IAuthorizationHandler, BlogAuthorizationHandler>();
         }
     }
 }

@@ -11,6 +11,8 @@ namespace QuiqBlog.Service.Interfaces
         Blog GetBlog(int blogId);
         IEnumerable<Blog> GetBlogs(ApplicationUser applicationUser);
         Task<Blog> Add(Blog blog);
-        
+        Task<Blog> Update(Blog blog);
+
+
     }
 }

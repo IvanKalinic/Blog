@@ -30,13 +30,13 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col">
-                                <a asp-controller="Home" asp-action="Blog" asp-action="@blog.Id" class="btn btn-primary">
+                                <a asp-controller="Home" asp-action="Blog" asp-route-id="@blog.Id" class="btn btn-primary">
                                     <i class="fa fa-arrow-circle-right"></i>View
                                 </a>
                             </div>
                             <div class="col">
-                                <a asp-controller="Blog" asp-action="Edit" asp-action="@blog.Id" class="btn btn-primary">
-                                    <i class="fa fa-arrow-circle-right"></i>View
+                                <a asp-controller="Blog" asp-action="Edit" asp-route-id="@blog.Id" class="btn btn-primary">
+                                    <i class="fa fa-arrow-circle-right"></i>Edit
                                 </a>
                             </div>
                         </div>

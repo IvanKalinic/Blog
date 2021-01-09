@@ -38,5 +38,13 @@ namespace QuiqBlog.Service
 
             return blog;
         }
+
+        public async Task<Blog> Update(Blog blog)
+        {
+            applicationDbContext.Update(blog);
+            await applicationDbContext.SaveChangesAsync();
+
+            return blog;
+        }
     }
 }

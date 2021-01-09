@@ -12,6 +12,10 @@ namespace QuiqBlog.BusinessManagers.Interfaces
     public interface IBlogBusinessManager
     {
         Task<Blog> CreateBlog(CreateViewModel createViewModel, ClaimsPrincipal claimsPrincipal);
-        Task<ActionResult<EditViewModel>> GetEditViewModel(int? id, ClaimsPrincipal claimsPrincipal)
+
+        Task<ActionResult<EditViewModel>> UpdateBlog(EditViewModel editViewModel,
+            ClaimsPrincipal claimsPrincipal);
+
+        Task<ActionResult<EditViewModel>> GetEditViewModel(int? id, ClaimsPrincipal claimsPrincipal);
     }
 }
