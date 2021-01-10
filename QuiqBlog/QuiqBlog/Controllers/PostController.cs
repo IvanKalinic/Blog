@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using QuiqBlog.BusinessManagers.Interfaces;
 using QuiqBlog.Models.PostViewModels;
 
 namespace QuiqBlog.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private readonly IPostBusinessManager postBusinessManager;
@@ -16,12 +18,17 @@ namespace QuiqBlog.Controllers
         {
             this.postBusinessManager = postBusinessManager;
         }
-
-        public IActionResult Index()
+        [Route("Post/{id}"),AllowAnonymous]
+        public async Task<IActionResult> Index(int? id)
         {
-            return View();
+            var actionResult = await postBusinessManager.GetPostViewModel(id, User);
+            if (actionResult.Result is null)
+                return View(actionResult.Value);
+
+            return actionResult.Result;
         }
 
+        [Route("Post/Create")]
         public IActionResult Create()
         {
             return View(new CreateViewModel());
@@ -35,6 +42,7 @@ namespace QuiqBlog.Controllers
 
             return actionResult.Result;
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(CreateViewModel createViewModel)
         {

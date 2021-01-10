@@ -19,6 +19,8 @@ namespace QuiqBlog.Data.Models
 
         public DateTime CreatedOn { get; set; }
 
+        public virtual IEnumerable<Comment> Comments { get; set; }
+
 
     }
 }
